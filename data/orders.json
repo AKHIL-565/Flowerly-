@@ -1,0 +1,35 @@
+[
+  {
+    "id": "FLW-944708",
+    "customer": {
+      "fullName": "AKHIL A",
+      "email": "jithuakhil15@gmail.com",
+      "phone": "9544818520",
+      "address": "dfsf21",
+      "city": "Delhi NCR",
+      "pincode": "689622",
+      "deliveryDate": "2026-10-12",
+      "deliverySlot": "Standard Morning (9 AM - 1 PM)",
+      "giftMessage": ""
+    },
+    "items": [
+      {
+        "productId": 1,
+        "name": "Romantic Red Roses Bouquet",
+        "price": 1649,
+        "quantity": 2,
+        "size": "18 Stems",
+        "image": "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=80"
+      }
+    ],
+    "subtotal": 3298,
+    "discount": 0,
+    "shippingFee": 0,
+    "totalAmount": 3298,
+    "paymentMethod": "UPI",
+    "paymentStatus": "Paid",
+    "orderStatus": "Order Placed",
+    "trackingCode": "TRK-ZAU5ZZ",
+    "createdAt": "2026-10-12T07:09:04.708Z"
+  }
+]
