@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import {
@@ -11,20 +11,26 @@ import { useCart } from '@/context/CartContext'
 
 export default function CheckoutPage() {
   const router = useRouter()
-  const { items, totalPrice, clearCart } = useCart()
+  const { items, totalPrice, clearCart, selectedCity, setSelectedCity } = useCart()
 
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     phone: '',
     address: '',
-    city: 'Mumbai',
+    city: selectedCity !== 'Select City' ? selectedCity : 'Mumbai',
     pincode: '',
     deliveryDate: new Date().toISOString().split('T')[0],
     deliverySlot: 'Express Delivery (Within 2-3 Hours)',
     giftMessage: '',
     paymentMethod: 'UPI' as 'UPI' | 'COD' | 'Card' | 'NetBanking',
   })
+
+  useEffect(() => {
+    if (selectedCity && selectedCity !== 'Select City') {
+      setFormData(prev => ({ ...prev, city: selectedCity }))
+    }
+  }, [selectedCity])
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -257,16 +263,22 @@ export default function CheckoutPage() {
                     <select
                       name="city"
                       value={formData.city}
-                      onChange={handleChange}
+                      onChange={e => {
+                        handleChange(e)
+                        setSelectedCity(e.target.value)
+                      }}
                       className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-pink-500 focus:outline-none bg-white"
                     >
                       <option value="Mumbai">Mumbai</option>
                       <option value="Delhi NCR">Delhi NCR</option>
                       <option value="Bengaluru">Bengaluru</option>
+                      <option value="Kerala">Kerala</option>
                       <option value="Hyderabad">Hyderabad</option>
                       <option value="Chennai">Chennai</option>
                       <option value="Pune">Pune</option>
                       <option value="Kolkata">Kolkata</option>
+                      <option value="Ahmedabad">Ahmedabad</option>
+                      <option value="Jaipur">Jaipur</option>
                     </select>
                   </div>
 

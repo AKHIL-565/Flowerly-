@@ -35,6 +35,8 @@ interface CartContextType {
   removeFromWishlist: (id: number) => void
   isInWishlist: (id: number) => boolean
   totalWishlist: number
+  selectedCity: string
+  setSelectedCity: (city: string) => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -42,6 +44,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined)
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const [wishlist, setWishlist] = useState<WishlistItem[]>([])
+  const [selectedCity, setSelectedCityState] = useState<string>('Select City')
   const [hydrated, setHydrated] = useState(false)
 
   useEffect(() => {
@@ -51,6 +54,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       const savedWishlist = localStorage.getItem('flowerly_wishlist')
       if (savedWishlist) setWishlist(JSON.parse(savedWishlist))
+
+      const savedCity = localStorage.getItem('flowerly_city')
+      if (savedCity) setSelectedCityState(savedCity)
     } catch (e) {
       console.error('Failed to parse local storage', e)
     }
@@ -76,6 +82,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
     }
   }, [wishlist, hydrated])
+
+  const setSelectedCity = useCallback((city: string) => {
+    setSelectedCityState(city)
+    try {
+      localStorage.setItem('flowerly_city', city)
+    } catch (e) {
+      console.error('Failed to save city', e)
+    }
+  }, [])
 
   const addToCart = useCallback((newItem: Omit<CartItem, 'quantity'>) => {
     setItems(prev => {
@@ -150,6 +165,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         removeFromWishlist,
         isInWishlist,
         totalWishlist,
+        selectedCity,
+        setSelectedCity,
       }}
     >
       {children}
